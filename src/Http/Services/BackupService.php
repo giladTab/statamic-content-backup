@@ -19,7 +19,7 @@ class BackupService
 {
     private $tempFolderName = "temp";
     private $databaseBasePath = 'database';
-    private $filesBasePath = 'files';
+    private $Path = 'files';
 
     public function listBackups(): array {
         $backupFolder = $this->getBackupFolder();
@@ -114,7 +114,7 @@ class BackupService
         foreach ($includeFiles as $file) {
             $filePath = base_path($file);
             if(File::exists($filePath)) {
-                $this->addToZip($filePath, $zip, $this->filesBasePath . $file);
+                $this->addToZip($filePath, $zip, $this->filesBasePath . '/' . $file);
             }else {
                 Log::warning("File or directory not found: $filePath");
             }
@@ -192,7 +192,7 @@ class BackupService
             $zip->close();
 
             foreach ($includeFiles as $file) {
-                $tempFile = $tempFolder . '/' . $this->filesBasePath . '/' . $file;
+                $tempFile = $tempFolder . '/' . $this->Path . '/' . $file;
                 $oldFile = base_path($file);
                 if(File::exists($tempFile)) {
 
